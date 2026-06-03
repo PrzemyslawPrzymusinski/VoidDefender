@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     game.cpp \
+    opponent.cpp \
     player.cpp
 
 # --- SEKCJA DLA WINDOWS (dla Twojego współpracownika) ---
@@ -22,4 +23,5 @@ unix:!macx {
 
 HEADERS += \
     game.h \
+    opponent.h \
     player.h

@@ -2,7 +2,7 @@
 #include <cmath>
 
 Player::Player() {
-    speed = 300.f;
+    speed = 300.f; // zrobic zeby  bylo zmienne
 
     if (!texture.loadFromFile("player.png")) {
         //

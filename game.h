@@ -1,7 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include <player.h>
+#include <opponent.h>
 
 class Game {
 private:
@@ -10,6 +12,7 @@ private:
     sf::Clock clock;
 
     Player player;
+    std::vector<Opponent> opponents;
 
     // metody pomocnicze
     void processEvents();
