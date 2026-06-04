@@ -1,4 +1,6 @@
 #include "game.h"
+#include "BasicOpp.h"
+#include <memory>
 
 Game::Game() : window(sf::VideoMode(600, 900), "Void Defender") {
     window.setFramerateLimit(60);
@@ -33,7 +35,7 @@ void Game::update() {
     player.handleInput(deltaTime);
 
     for (auto& o : opponents) {
-        o.movement(deltaTime);
+        o->movement(deltaTime);
     }
 }
 
@@ -43,12 +45,12 @@ void Game::render() {
     player.draw(window);
 
     for (auto& o : opponents) {
-        o.draw(window);
+        o->draw(window);
     }
 
     window.display();
 }
 
 void Game::spawnOpponent() {
-    opponents.push_back(Opponent(opponentTexture));
+    opponents.push_back(std::make_unique<BasicOpp>(opponentTexture));
 }

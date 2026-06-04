@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
+    basicopp.cpp \
     game.cpp \
     opponent.cpp \
     player.cpp
@@ -22,6 +23,7 @@ unix:!macx {
 }
 
 HEADERS += \
+    basicopp.h \
     game.h \
     opponent.h \
     player.h

@@ -8,18 +8,11 @@ Opponent::Opponent(const sf::Texture& texture) {
 
     sprite.setTexture(texture);
 
-    // temp
     sprite.setScale(0.5, 0.5);
-    // sprite.rotate(180);
 
-    sprite.setPosition(300.0, 50.0);
+    sprite.setPosition(300.0, 0.0);
 }
 
-void Opponent::movement(float deltaTime) {
-    sprite.move(0.f, speed * deltaTime);
-}
-
-
-void Opponent::draw(sf::RenderWindow& window) {
+void Opponent::draw(sf::RenderWindow& window) const {
     window.draw(sprite);
 }

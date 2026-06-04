@@ -4,6 +4,7 @@
 #include <vector>
 #include <player.h>
 #include <opponent.h>
+#include <memory>
 
 class Game {
 private:
@@ -13,7 +14,7 @@ private:
 
     Player player;
     sf::Texture opponentTexture;
-    std::vector<Opponent> opponents;
+    std::vector<std::unique_ptr<Opponent>> opponents;
 
     // metody pomocnicze
     void processEvents();

@@ -2,17 +2,19 @@
 #define OPPONENT_H
 #include <SFML/Graphics.hpp>
 
-class Opponent
-{
-private:
+class Opponent {
+protected:
     sf::Sprite sprite;
-    sf::Texture texture;
     float speed;
+
 public:
     Opponent(const sf::Texture& texture);
 
-    void movement(float deltaTime);
-    void draw(sf::RenderWindow& window);
+    virtual ~Opponent() = default;
+
+    virtual void movement(float deltaTime) = 0;
+
+    void draw(sf::RenderWindow& window) const;
 };
 
 #endif // OPPONENT_H
