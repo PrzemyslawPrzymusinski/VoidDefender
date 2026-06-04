@@ -12,12 +12,14 @@ private:
     sf::Clock clock;
 
     Player player;
+    sf::Texture opponentTexture;
     std::vector<Opponent> opponents;
 
     // metody pomocnicze
     void processEvents();
     void update();
     void render();
+    void spawnOpponent();
 public:
     Game();
     void run();

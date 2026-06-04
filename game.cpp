@@ -2,9 +2,13 @@
 
 Game::Game() : window(sf::VideoMode(600, 900), "Void Defender") {
     window.setFramerateLimit(60);
+    srand(time(0));
 
-    opponents.emplace_back(Opponent());
-    opponents.emplace_back(Opponent());
+    if (!opponentTexture.loadFromFile("player.png")) {
+        // Obsługa błędu
+    }
+
+    spawnOpponent();
 }
 
 void Game::run() {
@@ -28,7 +32,7 @@ void Game::update() {
 
     player.handleInput(deltaTime);
 
-    for (auto o : opponents) {
+    for (auto& o : opponents) {
         o.movement(deltaTime);
     }
 }
@@ -38,9 +42,13 @@ void Game::render() {
 
     player.draw(window);
 
-    for (auto o : opponents) {
+    for (auto& o : opponents) {
         o.draw(window);
     }
 
     window.display();
+}
+
+void Game::spawnOpponent() {
+    opponents.push_back(Opponent(opponentTexture));
 }

@@ -9,7 +9,7 @@ private:
     sf::Texture texture;
     float speed;
 public:
-    Opponent();
+    Opponent(const sf::Texture& texture);
 
     void movement(float deltaTime);
     void draw(sf::RenderWindow& window);
