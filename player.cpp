@@ -3,9 +3,10 @@
 
 Player::Player() {
     speed = 300.f; // zrobic zeby  bylo zmienne
+    shootCooldown = 0.5; // [s]
 
     if (!texture.loadFromFile("player.png")) {
-        //
+        // TODO
     }
     sprite.setTexture(texture);
 
@@ -43,4 +44,24 @@ void Player::handleInput(float deltaTime) {
 
 void Player::draw(sf::RenderWindow& window) {
     window.draw(sprite);
+}
+
+bool Player::canShoot() {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        if (shootTimer.getElapsedTime().asSeconds() >= shootCooldown) {
+            shootTimer.restart();
+            return true;
+        }
+    }
+    return false;
+}
+
+sf::Vector2f Player::getPosition() const {
+    sf::FloatRect bounds = sprite.getGlobalBounds();
+
+    // zwracanie srodka gracza pod Bullet
+    float centerX = bounds.left + (bounds.width / 2.f);
+    float centerY = bounds.top + (bounds.height / 2.f);
+
+    return sf::Vector2f(centerX, centerY);
 }

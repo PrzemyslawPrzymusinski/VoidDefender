@@ -7,7 +7,11 @@ Game::Game() : window(sf::VideoMode(600, 900), "Void Defender") {
     srand(time(0));
 
     if (!opponentTexture.loadFromFile("player.png")) {
-        // Obsługa błędu
+        // TODO
+    }
+
+    if (!bulletTexture.loadFromFile("player.png")) { // zmienic
+        // TODO
     }
 
     spawnOpponent();
@@ -34,23 +38,39 @@ void Game::update() {
 
     player.handleInput(deltaTime);
 
+    if (player.canShoot()) {
+        spawnBullet();
+    }
+
     for (auto& o : opponents) {
         o->movement(deltaTime);
+    }
+
+    for (auto& b : bullets) {
+        b->movement(deltaTime);
     }
 }
 
 void Game::render() {
     window.clear(sf::Color::Black);
 
-    player.draw(window);
-
     for (auto& o : opponents) {
         o->draw(window);
     }
+
+    for (auto& b : bullets) {
+        b->draw(window);
+    }
+
+    player.draw(window);
 
     window.display();
 }
 
 void Game::spawnOpponent() {
     opponents.push_back(std::make_unique<BasicOpp>(opponentTexture));
+}
+
+void Game::spawnBullet() {
+    bullets.push_back(std::make_unique<Bullet>(bulletTexture, player.getPosition()));
 }

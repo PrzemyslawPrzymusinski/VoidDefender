@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     basicopp.cpp \
+    bullet.cpp \
     game.cpp \
     opponent.cpp \
     player.cpp
@@ -24,6 +25,7 @@ unix:!macx {
 
 HEADERS += \
     basicopp.h \
+    bullet.h \
     game.h \
     opponent.h \
     player.h

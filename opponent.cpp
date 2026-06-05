@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 Opponent::Opponent(const sf::Texture& texture) {
-    srand(time(0));
+    //srand(time(0));
     speed = rand() % 200; // zrobic zeby  bylo zmienne
 
     sprite.setTexture(texture);
