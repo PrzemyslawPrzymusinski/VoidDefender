@@ -39,7 +39,7 @@ void Game::update() {
     float deltaTime = clock.restart().asSeconds();
 
     player.updateInvincibility();
-    player.handleInput(deltaTime);
+    player.handleInput(deltaTime, window.getView().getSize());
     if (player.canShoot()) {
         spawnBullet();
     }

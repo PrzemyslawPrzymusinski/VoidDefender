@@ -1,5 +1,6 @@
 #include "player.h"
 #include <cmath>
+#include <iostream>
 
 Player::Player() {
     speed = 300.f;
@@ -11,6 +12,10 @@ Player::Player() {
     }
     sprite.setTexture(texture);
 
+    // ustawianie kotwicy na srodek
+    sf::FloatRect bounds = sprite.getLocalBounds();
+    sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+
     // temp
     sprite.setScale(0.6, 0.6);
     sprite.rotate(180);
@@ -18,7 +23,7 @@ Player::Player() {
     sprite.setPosition(300.0, 700.0);
 }
 
-void Player::handleInput(float deltaTime) {
+void Player::handleInput(float deltaTime, sf::Vector2f windowSize) {
     sf::Vector2f movement(0.0, 0.0);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
@@ -41,10 +46,30 @@ void Player::handleInput(float deltaTime) {
     }
 
     sprite.move(movement * speed * deltaTime);
+
+    //blokowanie na krawedziach
+    sf::Vector2f position = sprite.getPosition();
+    sf::FloatRect bounds = sprite.getGlobalBounds();
+
+    float halfWidth = bounds.width / 2.f;
+    float halfHeight = bounds.height / 2.f;
+    position.x = std::clamp(position.x, halfWidth, windowSize.x - halfWidth);
+    position.y = std::clamp(position.y, halfHeight, windowSize.y - halfHeight);
+
+    sprite.setPosition(position);
 }
 
 void Player::draw(sf::RenderWindow& window) {
     window.draw(sprite);
+
+    // do testowania
+    sf::FloatRect bounds = sprite.getGlobalBounds();
+    sf::RectangleShape debugRect(sf::Vector2f(bounds.width, bounds.height));
+    debugRect.setPosition(bounds.left, bounds.top);
+    debugRect.setFillColor(sf::Color::Transparent);
+    debugRect.setOutlineColor(sf::Color::Red);
+    debugRect.setOutlineThickness(2.f);
+    window.draw(debugRect);
 }
 
 bool Player::canShoot() {

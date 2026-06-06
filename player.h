@@ -21,7 +21,7 @@ private:
 public:
     Player();
 
-    void handleInput(float deltaTime);
+    void handleInput(float deltaTime, sf::Vector2f windowSize);
     void draw(sf::RenderWindow& window);
 
     bool canShoot();
