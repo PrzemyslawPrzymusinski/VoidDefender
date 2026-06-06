@@ -38,8 +38,8 @@ void Game::processEvents() {
 void Game::update() {
     float deltaTime = clock.restart().asSeconds();
 
+    player.updateInvincibility();
     player.handleInput(deltaTime);
-
     if (player.canShoot()) {
         spawnBullet();
     }
@@ -64,6 +64,15 @@ void Game::update() {
         }
     }
 
+    for (auto& o : opponents) {
+        if (!o->isDestroyed()) {
+            if (player.getBounds().intersects(o->getBounds())) {
+                player.destroy();
+                o->destroy();
+            }
+        }
+    }
+
     // usuwanie
     bullets.erase(
         std::remove_if(bullets.begin(), bullets.end(), [](const std::unique_ptr<Bullet>& b) {
@@ -79,6 +88,11 @@ void Game::update() {
         }),
         opponents.end()
         );
+
+    if (player.isDestroyed()) {
+        std::cout << "GAME OVER" << std::endl;
+        // TODO
+    }
 }
 
 void Game::render() {

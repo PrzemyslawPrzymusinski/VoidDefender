@@ -17,7 +17,6 @@ void Bullet::movement(float deltaTime) {
 
 bool Bullet::isOffScreen() {
     if (sprite.getPosition().y < -50.f) {
-        //std::cout << "test";
         return true;
     }
     return false;

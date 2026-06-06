@@ -8,9 +8,16 @@ private:
     sf::Sprite sprite;
     sf::Texture texture;
     float speed;
+    int lifes;
+    bool destroyed = false;
 
     sf::Clock shootTimer;
     float shootCooldown;
+
+    // zmienne od invincibility frames
+    sf::Clock damageTimer;
+    float invincibilityDuration = 1.0f;
+    bool isInvincible = false;
 public:
     Player();
 
@@ -18,7 +25,11 @@ public:
     void draw(sf::RenderWindow& window);
 
     bool canShoot();
+    void destroy(); // chodzi o damage
+    bool isDestroyed() const;
     sf::Vector2f getPosition() const;
+    sf::FloatRect getBounds() const;
+    void updateInvincibility();
 };
 
 #endif // PLAYER_H

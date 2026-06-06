@@ -2,8 +2,9 @@
 #include <cmath>
 
 Player::Player() {
-    speed = 300.f; // zrobic zeby  bylo zmienne
+    speed = 300.f;
     shootCooldown = 0.5; // [s]
+    lifes = 3;
 
     if (!texture.loadFromFile("player.png")) {
         // TODO
@@ -56,6 +57,21 @@ bool Player::canShoot() {
     return false;
 }
 
+void Player::destroy() {
+    if (!isInvincible) {
+        lifes -= 1;
+        if (lifes <= 0) {
+            destroyed = true;
+        }
+        isInvincible = true;
+        damageTimer.restart();
+    }
+}
+
+bool Player::isDestroyed() const {
+    return destroyed;
+}
+
 sf::Vector2f Player::getPosition() const {
     sf::FloatRect bounds = sprite.getGlobalBounds();
 
@@ -64,4 +80,17 @@ sf::Vector2f Player::getPosition() const {
     float centerY = bounds.top + (bounds.height / 2.f);
 
     return sf::Vector2f(centerX, centerY);
+}
+
+
+sf::FloatRect Player::getBounds() const {
+    return sprite.getGlobalBounds();
+}
+
+void Player::updateInvincibility() {
+    if (isInvincible) {
+        if (damageTimer.getElapsedTime().asSeconds() >= invincibilityDuration) {
+            isInvincible = false;
+        }
+    }
 }
