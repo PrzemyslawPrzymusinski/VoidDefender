@@ -6,6 +6,8 @@ class Opponent {
 protected:
     sf::Sprite sprite;
     float speed;
+    int lifes;
+    bool destroyed = false;
 
 public:
     Opponent(const sf::Texture& texture);
@@ -13,8 +15,11 @@ public:
     virtual ~Opponent() = default;
 
     virtual void movement(float deltaTime) = 0;
-
     void draw(sf::RenderWindow& window) const;
+
+    sf::FloatRect getBounds() const;
+    void destroy();
+    bool isDestroyed() const;
 };
 
 #endif // OPPONENT_H

@@ -1,7 +1,8 @@
 #include "basicopp.h"
 
 BasicOpp::BasicOpp(const sf::Texture& texture) : Opponent(texture) {
-    // kosntruktor...
+    speed = rand() % 200;
+    lifes = 1;
 }
 
 

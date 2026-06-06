@@ -1,6 +1,8 @@
 #include "game.h"
 #include "BasicOpp.h"
 #include <memory>
+#include <algorithm>
+#include <iostream>
 
 Game::Game() : window(sf::VideoMode(600, 900), "Void Defender") {
     window.setFramerateLimit(60);
@@ -49,6 +51,34 @@ void Game::update() {
     for (auto& b : bullets) {
         b->movement(deltaTime);
     }
+
+    // kolizje
+    for (auto& b : bullets) {
+        for (auto& o : opponents) {
+            if (!b->isDestroyed() && !o->isDestroyed()) {
+                if (b->getBounds().intersects(o->getBounds())) {
+                    b->destroy();
+                    o->destroy();
+                }
+            }
+        }
+    }
+
+    // usuwanie
+    bullets.erase(
+        std::remove_if(bullets.begin(), bullets.end(), [](const std::unique_ptr<Bullet>& b) {
+            return b->isOffScreen() || b->isDestroyed();
+        }),
+        bullets.end()
+        );
+
+    opponents.erase(
+        std::remove_if(opponents.begin(), opponents.end(), [this](const std::unique_ptr<Opponent>& o) {
+            bool isOffScreen = o->getBounds().top > window.getSize().y; // usuwa u spodu ekranu
+            return o->isDestroyed() || isOffScreen;
+        }),
+        opponents.end()
+        );
 }
 
 void Game::render() {
