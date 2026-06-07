@@ -1,12 +1,14 @@
 #include "game.h"
 #include "BasicOpp.h"
+#include "poziomy.h"
 #include <memory>
 #include <algorithm>
 #include <iostream>
 
-Game::Game() : window(sf::VideoMode(600, 900), "Void Defender") {
-    window.setFramerateLimit(60);
+Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : window(windowRef){
     srand(time(0));
+    backgroundSprite.setTexture(backgroundTex);
+    backgroundSprite.setScale(0.5, 0.5);
 
     if (!opponentTexture.loadFromFile("player.png")) {
         // TODO
@@ -91,12 +93,15 @@ void Game::update() {
 
     if (player.isDestroyed()) {
         std::cout << "GAME OVER" << std::endl;
-        // TODO
+        gameWon = false;
+        end(window);
     }
 }
 
 void Game::render() {
     window.clear(sf::Color::Black);
+
+    window.draw(backgroundSprite);
 
     for (auto& o : opponents) {
         o->draw(window);
