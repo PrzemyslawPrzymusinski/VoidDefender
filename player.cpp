@@ -17,7 +17,7 @@ Player::Player() {
     sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 
     // temp
-    sprite.setScale(0.1, 0.1);
+    sprite.setScale(0.07, 0.07);
 
     sprite.setPosition(300.0, 700.0);
 }
