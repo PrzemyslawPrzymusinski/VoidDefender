@@ -7,7 +7,7 @@ Player::Player() {
     shootCooldown = 0.5; // [s]
     lifes = 3;
 
-    if (!texture.loadFromFile("player.png")) {
+    if (!texture.loadFromFile("statek.png")) {
         // TODO
     }
     sprite.setTexture(texture);
@@ -17,8 +17,7 @@ Player::Player() {
     sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 
     // temp
-    sprite.setScale(0.6, 0.6);
-    sprite.rotate(180);
+    sprite.setScale(0.1, 0.1);
 
     sprite.setPosition(300.0, 700.0);
 }
