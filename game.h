@@ -9,7 +9,7 @@
 
 class Game {
 private:
-    sf::RenderWindow window;
+    sf::RenderWindow& window;
     sf::Event event;
     sf::Clock clock;
 
@@ -17,6 +17,8 @@ private:
 
     sf::Texture opponentTexture;
     sf::Texture bulletTexture;
+
+    sf::Sprite backgroundSprite;
 
     std::vector<std::unique_ptr<Opponent>> opponents;
     std::vector<std::unique_ptr<Bullet>> bullets;
@@ -28,7 +30,7 @@ private:
     void spawnOpponent();
     void spawnBullet();
 public:
-    Game();
+    Game(sf::RenderWindow& window, const sf::Texture& backgroundTex);
     void run();
 };
 #endif // GAME_H
