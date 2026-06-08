@@ -68,7 +68,7 @@ void Game::update() {
     spawnTimer += deltaTime;
     std::cout << "Timer: " << spawnTimer << " | Interval: " << spawnInterval << '\n';
     if (spawnTimer >= spawnInterval) {
-        spawnBasicOpp();
+        spawnOpponent();
         spawnTimer = 0.f;
     }
 
@@ -166,6 +166,22 @@ void Game::spawnTankOpp() {
     float randomX = std::rand() % (int)(windowWidth - 100);
 
     opponents.push_back(std::make_unique<TankOpp>(tankTexture, randomX));
+}
+
+void Game::spawnOpponent() {
+    float windowWidth = window.getView().getSize().x;
+    float randomX = std::rand() % (int)(windowWidth - 100);
+    std::unique_ptr<Opponent> newOpponent;
+
+    int spawnChance = std::rand() % 100;
+
+    if (spawnChance < 80) {
+        newOpponent = std::make_unique<BasicOpp>(opponentTexture, randomX);
+    } else {
+        newOpponent = std::make_unique<TankOpp>(tankTexture, randomX);
+    }
+
+    opponents.push_back(std::move(newOpponent));
 }
 
 

@@ -39,6 +39,7 @@ private:
     void update();
     void render();
 
+    void spawnOpponent();
     void spawnBasicOpp();
     void spawnTankOpp();
     void spawnBasicOpp(float x);
