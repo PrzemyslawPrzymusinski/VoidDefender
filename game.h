@@ -15,8 +15,10 @@ private:
 
     Player player;
 
+    // tekstury
     sf::Texture opponentTexture;
     sf::Texture bulletTexture;
+    sf::Texture tankTexture;
 
     sf::Sprite backgroundSprite;
 
@@ -38,6 +40,7 @@ private:
     void render();
 
     void spawnBasicOpp();
+    void spawnTankOpp();
     void spawnBasicOpp(float x);
 
     void spawnBullet();

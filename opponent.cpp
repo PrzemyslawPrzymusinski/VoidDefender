@@ -2,24 +2,20 @@
 #include <cmath>
 #include <cstdlib>
 
-Opponent::Opponent(const sf::Texture& texture, int _lifes) {
+Opponent::Opponent(const sf::Texture& texture) {
     sprite.setTexture(texture);
 
     sprite.setScale(0.5, 0.5);
 
     sprite.setPosition(300.0, -50.f);
-
-    lifes = _lifes;
 }
 
-Opponent::Opponent(const sf::Texture& texture, float _x, int _lifes) {
+Opponent::Opponent(const sf::Texture& texture, float _x) {
     sprite.setTexture(texture);
 
     sprite.setScale(0.5, 0.5);
 
     sprite.setPosition(_x, -50.0);
-
-    lifes = _lifes;
 }
 
 void Opponent::draw(sf::RenderWindow& window) const {

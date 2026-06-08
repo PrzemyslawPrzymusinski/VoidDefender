@@ -1,5 +1,6 @@
 #include "game.h"
 #include "basicopp.h"
+#include "tankopp.h"
 #include "poziomy.h"
 #include <memory>
 #include <algorithm>
@@ -19,6 +20,9 @@ Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : wind
     if (!bulletTexture.loadFromFile("bullet.png")) {
        cout << "Blad bullet.png" << endl;
     }
+    if (!tankTexture.loadFromFile("tank.png")) {
+       cout << "Blad tank.png" << endl;
+    }
 
     if (!font.loadFromFile("stan0753.ttf")) {
         cout << "Blad czcionki" << endl;
@@ -29,7 +33,7 @@ Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : wind
     scoreText.setString("0");
 
     spawnBasicOpp(100.f);
-    spawnBasicOpp(300.f);
+    spawnTankOpp();
 
     spawnTimer = 0.f;
     spawnInterval = 1.5f;
@@ -81,9 +85,11 @@ void Game::update() {
         for (auto& o : opponents) {
             if (!b->isDestroyed() && !o->isDestroyed()) {
                 if (b->getBounds().intersects(o->getBounds())) {
-                    score += o->getPoints();
                     b->destroy();
                     o->destroy();
+                    if (o->isDestroyed()) {
+                        score += o->getPoints();
+                    }
                 }
             }
         }
@@ -152,9 +158,14 @@ void Game::spawnBasicOpp() {
     float windowWidth = window.getSize().x;
     float randomX = std::rand() % (int)(windowWidth - 100);
 
-    cout << "TEST" << endl;
-
     opponents.push_back(std::make_unique<BasicOpp>(opponentTexture, randomX));
+}
+
+void Game::spawnTankOpp() {
+    float windowWidth = window.getSize().x;
+    float randomX = std::rand() % (int)(windowWidth - 100);
+
+    opponents.push_back(std::make_unique<TankOpp>(tankTexture, randomX));
 }
 
 

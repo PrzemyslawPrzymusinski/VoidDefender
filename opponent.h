@@ -11,8 +11,8 @@ protected:
     int points;
 
 public:
-    Opponent(const sf::Texture& texture, int _lifes);
-    Opponent(const sf::Texture& texture, float _x, int _lifes);
+    Opponent(const sf::Texture& texture);
+    Opponent(const sf::Texture& texture, float _x);
 
     virtual ~Opponent() = default;
 

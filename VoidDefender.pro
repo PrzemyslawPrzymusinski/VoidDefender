@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     opponent.cpp \
     player.cpp \
     poziomy.cpp \
-    przyciski.cpp
+    przyciski.cpp \
+    tankopp.cpp
 
 
 win32 {
@@ -29,4 +30,5 @@ HEADERS += \
     opponent.h \
     player.h \
     poziomy.h \
-    przyciski.h
+    przyciski.h \
+    tankopp.h
