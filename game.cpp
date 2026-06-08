@@ -1,6 +1,7 @@
 #include "game.h"
 #include "basicopp.h"
 #include "tankopp.h"
+#include "zigzagopp.h"
 #include "poziomy.h"
 #include <memory>
 #include <algorithm>
@@ -66,7 +67,7 @@ void Game::update() {
 
     // spawnowanie
     spawnTimer += deltaTime;
-    std::cout << "Timer: " << spawnTimer << " | Interval: " << spawnInterval << '\n';
+    // std::cout << "Timer: " << spawnTimer << " | Interval: " << spawnInterval << '\n';
     if (spawnTimer >= spawnInterval) {
         spawnOpponent();
         spawnTimer = 0.f;
@@ -175,7 +176,10 @@ void Game::spawnOpponent() {
 
     int spawnChance = std::rand() % 100;
 
-    if (spawnChance < 80) {
+    if (spawnChance < 40) {
+        newOpponent = std::make_unique<ZigZagOpp>(opponentTexture, randomX, windowWidth);
+    }
+    else if (spawnChance < 80) {
         newOpponent = std::make_unique<BasicOpp>(opponentTexture, randomX);
     } else {
         newOpponent = std::make_unique<TankOpp>(tankTexture, randomX);

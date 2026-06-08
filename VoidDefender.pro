@@ -11,7 +11,8 @@ SOURCES += main.cpp \
     player.cpp \
     poziomy.cpp \
     przyciski.cpp \
-    tankopp.cpp
+    tankopp.cpp \
+    zigzagopp.cpp
 
 
 win32 {
@@ -31,4 +32,5 @@ HEADERS += \
     player.h \
     poziomy.h \
     przyciski.h \
-    tankopp.h
+    tankopp.h \
+    zigzagopp.h
