@@ -7,8 +7,8 @@ Bullet::Bullet(const sf::Texture& texture, sf::Vector2f pos) {
     sprite.setOrigin(bounds.width / 2.0, bounds.height / 2.0);
 
     sprite.setTexture(texture);
-    sprite.setScale(0.2, 0.2);
-    sprite.setPosition(pos.x - 20.0, pos.y);
+    sprite.setScale(1, 1);
+    sprite.setPosition(pos.x, pos.y -20.0f);
 }
 
 void Bullet::movement(float deltaTime) {

@@ -49,11 +49,12 @@ void Player::handleInput(float deltaTime, sf::Vector2f windowSize) {
     //blokowanie na krawedziach
     sf::Vector2f position = sprite.getPosition();
     sf::FloatRect bounds = sprite.getGlobalBounds();
+    float y_offset = 110.0; // offset do blokowania przed ramka (110.0 jest +- ok)
 
     float halfWidth = bounds.width / 2.f;
     float halfHeight = bounds.height / 2.f;
     position.x = std::clamp(position.x, halfWidth, windowSize.x - halfWidth);
-    position.y = std::clamp(position.y, halfHeight, windowSize.y - halfHeight);
+    position.y = std::clamp(position.y, halfHeight, windowSize.y - halfHeight - y_offset);
 
     sprite.setPosition(position);
 }
@@ -62,13 +63,13 @@ void Player::draw(sf::RenderWindow& window) {
     window.draw(sprite);
 
     // do testowania
-    sf::FloatRect bounds = sprite.getGlobalBounds();
+    /*sf::FloatRect bounds = sprite.getGlobalBounds();
     sf::RectangleShape debugRect(sf::Vector2f(bounds.width, bounds.height));
     debugRect.setPosition(bounds.left, bounds.top);
     debugRect.setFillColor(sf::Color::Transparent);
     debugRect.setOutlineColor(sf::Color::Red);
     debugRect.setOutlineThickness(2.f);
-    window.draw(debugRect);
+    window.draw(debugRect);*/
 }
 
 bool Player::canShoot() {

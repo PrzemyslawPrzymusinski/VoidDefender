@@ -1,5 +1,5 @@
 #include "game.h"
-#include "BasicOpp.h"
+#include "basicopp.h"
 #include "poziomy.h"
 #include <memory>
 #include <algorithm>
@@ -10,12 +10,12 @@ Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : wind
     backgroundSprite.setTexture(backgroundTex);
     backgroundSprite.setScale(0.5, 0.5);
 
-    if (!opponentTexture.loadFromFile("player.png")) {
+    if (!opponentTexture.loadFromFile("basicopp.png")) {
         // TODO
     }
 
-    if (!bulletTexture.loadFromFile("player.png")) { // zmienic
-        // TODO
+    if (!bulletTexture.loadFromFile("bullet.png")) { // zmienic
+       // TODO
     }
 
     spawnOpponent();
@@ -85,7 +85,7 @@ void Game::update() {
 
     opponents.erase(
         std::remove_if(opponents.begin(), opponents.end(), [this](const std::unique_ptr<Opponent>& o) {
-            bool isOffScreen = o->getBounds().top > window.getSize().y; // usuwa u spodu ekranu
+            bool isOffScreen = (o->getBounds().top + o->getBounds().height) > window.getSize().y - 110.0; // usuwa u spodu ekranu
             return o->isDestroyed() || isOffScreen;
         }),
         opponents.end()
