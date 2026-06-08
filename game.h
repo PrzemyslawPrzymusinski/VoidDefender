@@ -20,8 +20,13 @@ private:
 
     sf::Sprite backgroundSprite;
 
+    sf::Font font;
+    sf::Text scoreText;
+
     std::vector<std::unique_ptr<Opponent>> opponents;
     std::vector<std::unique_ptr<Bullet>> bullets;
+
+    int score;
 
     // spawn
     float spawnTimer;

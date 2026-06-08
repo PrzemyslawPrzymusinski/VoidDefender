@@ -10,13 +10,23 @@ Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : wind
     backgroundSprite.setTexture(backgroundTex);
     backgroundSprite.setScale(0.5, 0.5);
 
+    score = 0;
+
     if (!opponentTexture.loadFromFile("basicopp.png")) {
-        // TODO
+        cout << "Blad basicopp.png" << endl;
     }
 
-    if (!bulletTexture.loadFromFile("bullet.png")) { // zmienic
-       // TODO
+    if (!bulletTexture.loadFromFile("bullet.png")) {
+       cout << "Blad bullet.png" << endl;
     }
+
+    if (!font.loadFromFile("stan0753.ttf")) {
+        cout << "Blad czcionki" << endl;
+    }
+    scoreText.setFont(font);
+    scoreText.setCharacterSize(24);
+    scoreText.setFillColor(sf::Color::White);
+    scoreText.setString("0");
 
     spawnBasicOpp(100.f);
     spawnBasicOpp(300.f);
@@ -71,6 +81,7 @@ void Game::update() {
         for (auto& o : opponents) {
             if (!b->isDestroyed() && !o->isDestroyed()) {
                 if (b->getBounds().intersects(o->getBounds())) {
+                    score += o->getPoints();
                     b->destroy();
                     o->destroy();
                 }
@@ -108,6 +119,13 @@ void Game::update() {
         gameWon = false;
         end(window);
     }
+
+    // obsluga wyswietlacza wyniku
+    scoreText.setString(std::to_string(score));
+    sf::FloatRect textBounds = scoreText.getLocalBounds();
+    float xPos = 15.f;
+    float yPos = window.getView().getSize().y - textBounds.height - 15.f;
+    scoreText.setPosition(xPos, yPos);
 }
 
 void Game::render() {
@@ -124,6 +142,8 @@ void Game::render() {
     }
 
     player.draw(window);
+
+    window.draw(scoreText);
 
     window.display();
 }

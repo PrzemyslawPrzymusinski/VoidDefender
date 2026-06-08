@@ -30,6 +30,10 @@ sf::FloatRect Opponent::getBounds() const {
     return sprite.getGlobalBounds();
 }
 
+int Opponent::getPoints() const {
+    return points;
+}
+
 void Opponent::destroy() {
     lifes -=1;
     if (lifes <= 0) {

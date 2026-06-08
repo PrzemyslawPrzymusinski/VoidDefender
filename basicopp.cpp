@@ -2,12 +2,14 @@
 
 BasicOpp::BasicOpp(const sf::Texture& texture) : Opponent(texture, 1) {
     speed = rand() % 200;
+    points = 1;
 
     sprite.setScale(0.075f, 0.075f);
 }
 
 BasicOpp::BasicOpp(const sf::Texture& texture, float _x) : Opponent(texture, _x, 1) {
     speed = rand() % 200;
+    points = 1;
 
     sprite.setScale(0.075f, 0.075f);
 }

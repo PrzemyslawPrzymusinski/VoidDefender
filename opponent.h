@@ -8,6 +8,7 @@ protected:
     float speed;
     int lifes;
     bool destroyed = false;
+    int points;
 
 public:
     Opponent(const sf::Texture& texture, int _lifes);
@@ -19,6 +20,7 @@ public:
     void draw(sf::RenderWindow& window) const;
 
     sf::FloatRect getBounds() const;
+    int getPoints() const;
     void destroy();
     bool isDestroyed() const;
 };
