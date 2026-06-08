@@ -2,15 +2,24 @@
 #include <cmath>
 #include <cstdlib>
 
-Opponent::Opponent(const sf::Texture& texture) {
-    //srand(time(0));
-    //speed = rand() % 200; // zrobic zeby  bylo zmienne
-
+Opponent::Opponent(const sf::Texture& texture, int _lifes) {
     sprite.setTexture(texture);
 
     sprite.setScale(0.5, 0.5);
 
-    sprite.setPosition(300.0, 0.0);
+    sprite.setPosition(300.0, -50.f);
+
+    lifes = _lifes;
+}
+
+Opponent::Opponent(const sf::Texture& texture, float _x, int _lifes) {
+    sprite.setTexture(texture);
+
+    sprite.setScale(0.5, 0.5);
+
+    sprite.setPosition(_x, -50.0);
+
+    lifes = _lifes;
 }
 
 void Opponent::draw(sf::RenderWindow& window) const {

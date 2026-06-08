@@ -7,6 +7,7 @@ class BasicOpp : public Opponent
 {
 public:
     BasicOpp(const sf::Texture& texture);
+    BasicOpp(const sf::Texture& texture, float _x);
 
     void movement(float deltaTime) override;
 };

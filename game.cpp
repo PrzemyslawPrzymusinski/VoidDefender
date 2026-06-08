@@ -18,7 +18,11 @@ Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : wind
        // TODO
     }
 
-    spawnOpponent();
+    spawnBasicOpp(100.f);
+    spawnBasicOpp(300.f);
+
+    spawnTimer = 0.f;
+    spawnInterval = 1.5f;
 }
 
 void Game::run() {
@@ -44,6 +48,14 @@ void Game::update() {
     player.handleInput(deltaTime, window.getView().getSize());
     if (player.canShoot()) {
         spawnBullet();
+    }
+
+    // spawnowanie
+    spawnTimer += deltaTime;
+    std::cout << "Timer: " << spawnTimer << " | Interval: " << spawnInterval << '\n';
+    if (spawnTimer >= spawnInterval) {
+        spawnBasicOpp();
+        spawnTimer = 0.f;
     }
 
     for (auto& o : opponents) {
@@ -116,8 +128,18 @@ void Game::render() {
     window.display();
 }
 
-void Game::spawnOpponent() {
-    opponents.push_back(std::make_unique<BasicOpp>(opponentTexture));
+void Game::spawnBasicOpp() {
+    float windowWidth = window.getSize().x;
+    float randomX = std::rand() % (int)(windowWidth - 100);
+
+    cout << "TEST" << endl;
+
+    opponents.push_back(std::make_unique<BasicOpp>(opponentTexture, randomX));
+}
+
+
+void Game::spawnBasicOpp(float x) {
+    opponents.push_back(std::make_unique<BasicOpp>(opponentTexture, x));
 }
 
 void Game::spawnBullet() {

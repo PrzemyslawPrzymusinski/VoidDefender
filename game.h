@@ -23,11 +23,18 @@ private:
     std::vector<std::unique_ptr<Opponent>> opponents;
     std::vector<std::unique_ptr<Bullet>> bullets;
 
+    // spawn
+    float spawnTimer;
+    float spawnInterval;
+
     // metody pomocnicze
     void processEvents();
     void update();
     void render();
-    void spawnOpponent();
+
+    void spawnBasicOpp();
+    void spawnBasicOpp(float x);
+
     void spawnBullet();
 public:
     Game(sf::RenderWindow& window, const sf::Texture& backgroundTex);

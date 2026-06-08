@@ -10,7 +10,8 @@ protected:
     bool destroyed = false;
 
 public:
-    Opponent(const sf::Texture& texture);
+    Opponent(const sf::Texture& texture, int _lifes);
+    Opponent(const sf::Texture& texture, float _x, int _lifes);
 
     virtual ~Opponent() = default;
 
