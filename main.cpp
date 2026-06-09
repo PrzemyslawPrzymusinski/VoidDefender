@@ -5,14 +5,14 @@
 int main() {
     przyciski* Przyciski[4];
     sf::Texture tekstury[4];
-    tekstury[0].loadFromFile("przycisk1.png");
-    tekstury[1].loadFromFile("przycisk2.png");
-    tekstury[2].loadFromFile("przycisk3.png");
-    tekstury[3].loadFromFile("przycisk4.png");
+    tekstury[0].loadFromFile("buttons/przycisk1.png");
+    tekstury[1].loadFromFile("buttons/przycisk2.png");
+    tekstury[2].loadFromFile("buttons/przycisk3.png");
+    tekstury[3].loadFromFile("buttons/przycisk4.png");
     create_bottoms(Przyciski, tekstury, 1);
 
     sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("start2.png");
+    backgroundTexture.loadFromFile("backgrounds/start2.png");
     sf::Sprite backgroundSprite(backgroundTexture);
     backgroundSprite.setScale(0.5,0.5);
 

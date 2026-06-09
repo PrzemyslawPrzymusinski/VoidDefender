@@ -7,8 +7,8 @@ Player::Player() {
     shootCooldown = 0.5; // [s]
     lifes = 3;
 
-    if (!texture.loadFromFile("statek.png")) {
-        // TODO
+    if (!texture.loadFromFile("textures/statek.png")) {
+        std::cout << "Blad ladowania tesktury statku" << std::endl;
     }
     sprite.setTexture(texture);
 

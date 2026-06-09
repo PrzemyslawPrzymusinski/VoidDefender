@@ -14,14 +14,14 @@ Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : wind
 
     score = 0;
 
-    if (!opponentTexture.loadFromFile("basicopp.png")) {
+    if (!opponentTexture.loadFromFile("textures/basicopp.png")) {
         cout << "Blad basicopp.png" << endl;
     }
 
-    if (!bulletTexture.loadFromFile("bullet.png")) {
+    if (!bulletTexture.loadFromFile("textures/bullet.png")) {
        cout << "Blad bullet.png" << endl;
     }
-    if (!tankTexture.loadFromFile("tank.png")) {
+    if (!tankTexture.loadFromFile("textures/tank.png")) {
        cout << "Blad tank.png" << endl;
     }
 

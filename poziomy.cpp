@@ -42,12 +42,12 @@ void wyniki(vector<int>& tabela){
 void end(sf::RenderWindow& window){
     wEndu = true;
     sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("wygrana.png");
+    backgroundTexture.loadFromFile("backgrounds/wygrana.png");
     sf::Sprite backgroundSprite(backgroundTexture);
     backgroundSprite.setScale(0.5,0.5);
 
     sf::Texture backgroundTexture2;
-    backgroundTexture2.loadFromFile("przegrana.png");
+    backgroundTexture2.loadFromFile("backgrounds/przegrana.png");
     sf::Sprite backgroundSprite2(backgroundTexture2);
     backgroundSprite2.setScale(0.5,0.5);
 
@@ -74,8 +74,8 @@ void end(sf::RenderWindow& window){
     }
     przyciski* Przyciski[2];
     sf::Texture tekstury[2];
-    tekstury[0].loadFromFile("przycisk4.png");
-    tekstury[1].loadFromFile("przycisk5.png");
+    tekstury[0].loadFromFile("buttons/przycisk4.png");
+    tekstury[1].loadFromFile("buttons/przycisk5.png");
     create_bottoms(Przyciski, tekstury, 2);
 
     while(window.isOpen() && wEndu){
@@ -119,7 +119,7 @@ void end(sf::RenderWindow& window){
 void poziom1(sf::RenderWindow& window){
     wPoziomie = true;
     sf::Texture poziomTexture;
-    if (!poziomTexture.loadFromFile("poziom1.png")) {
+    if (!poziomTexture.loadFromFile("backgrounds/poziom1.png")) {
         std::cout << "Blad ladowania tla poziomu 1!" << std::endl;
     }
 
@@ -131,7 +131,7 @@ void poziom1(sf::RenderWindow& window){
 void poziom2(sf::RenderWindow& window){
     wPoziomie = true;
     sf::Texture poziomTexture;
-    if (!poziomTexture.loadFromFile("poziom2.png")) {
+    if (!poziomTexture.loadFromFile("backgrounds/poziom2.png")) {
         std::cout << "Blad ladowania tla poziomu 2!" << std::endl;
     }
 
@@ -144,7 +144,7 @@ void poziom2(sf::RenderWindow& window){
 void poziom3(sf::RenderWindow& window){
     wPoziomie = true;
     sf::Texture poziomTexture;
-    if (!poziomTexture.loadFromFile("poziom3.png")) {
+    if (!poziomTexture.loadFromFile("backgrounds/poziom3.png")) {
         std::cout << "Blad ladowania tla poziomu 3!" << std::endl;
     }
 
