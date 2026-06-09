@@ -24,8 +24,12 @@ public:
     void handleInput(float deltaTime, sf::Vector2f windowSize);
     void draw(sf::RenderWindow& window);
 
+    // upgrade'y
+    void increaseSpeed();
+    void heal();
+
     bool canShoot();
-    void destroy(); // chodzi o damage
+    void destroy(); // chodzi o damage nie tylko zniszczenie
     bool isDestroyed() const;
     sf::Vector2f getPosition() const;
     sf::FloatRect getBounds() const;

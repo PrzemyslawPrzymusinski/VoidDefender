@@ -3,7 +3,7 @@
 #include <iostream>
 
 Player::Player() {
-    speed = 300.f;
+    speed = 250;
     shootCooldown = 0.5; // [s]
     lifes = 3;
 
@@ -62,7 +62,7 @@ void Player::handleInput(float deltaTime, sf::Vector2f windowSize) {
 void Player::draw(sf::RenderWindow& window) {
     window.draw(sprite);
 
-    // do testowania
+    // ramka do testowania
     /*sf::FloatRect bounds = sprite.getGlobalBounds();
     sf::RectangleShape debugRect(sf::Vector2f(bounds.width, bounds.height));
     debugRect.setPosition(bounds.left, bounds.top);
@@ -70,6 +70,14 @@ void Player::draw(sf::RenderWindow& window) {
     debugRect.setOutlineColor(sf::Color::Red);
     debugRect.setOutlineThickness(2.f);
     window.draw(debugRect);*/
+}
+
+void Player::increaseSpeed() {
+    speed += 50;
+}
+
+void Player::heal() {
+    lifes +=1;
 }
 
 bool Player::canShoot() {
@@ -85,6 +93,7 @@ bool Player::canShoot() {
 void Player::destroy() {
     if (!isInvincible) {
         lifes -= 1;
+        std::cout << "Przyjeto obrazenia" << std::endl;
         if (lifes <= 0) {
             destroyed = true;
         }

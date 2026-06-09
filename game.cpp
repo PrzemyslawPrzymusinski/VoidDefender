@@ -9,6 +9,9 @@
 
 Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : window(windowRef){
     srand(time(0));
+
+    state = GameState::PLAYING;
+
     backgroundSprite.setTexture(backgroundTex);
     backgroundSprite.setScale(0.5, 0.5);
 
@@ -28,6 +31,7 @@ Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : wind
     if (!font.loadFromFile("stan0753.ttf")) {
         cout << "Blad czcionki" << endl;
     }
+
     scoreText.setFont(font);
     scoreText.setCharacterSize(24);
     scoreText.setFillColor(sf::Color::White);
@@ -38,6 +42,8 @@ Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : wind
 
     spawnTimer = 0.f;
     spawnInterval = 1.5f;
+
+    nextUpgrade = 10;
 }
 
 void Game::run() {
@@ -59,80 +65,102 @@ void Game::processEvents() {
 void Game::update() {
     float deltaTime = clock.restart().asSeconds();
 
-    player.updateInvincibility();
-    player.handleInput(deltaTime, window.getView().getSize());
-    if (player.canShoot()) {
-        spawnBullet();
-    }
+    if (state == GameState::PLAYING) {
+        player.updateInvincibility();
+        player.handleInput(deltaTime, window.getView().getSize());
+        if (player.canShoot()) {
+            spawnBullet();
+        }
 
-    // spawnowanie
-    spawnTimer += deltaTime;
-    // std::cout << "Timer: " << spawnTimer << " | Interval: " << spawnInterval << '\n';
-    if (spawnTimer >= spawnInterval) {
-        spawnOpponent();
-        spawnTimer = 0.f;
-    }
+        // spawnowanie
+        spawnTimer += deltaTime;
+        // std::cout << "Timer: " << spawnTimer << " | Interval: " << spawnInterval << '\n';
+        if (spawnTimer >= spawnInterval) {
+            spawnOpponent();
+            spawnTimer = 0.f;
+        }
 
-    for (auto& o : opponents) {
-        o->movement(deltaTime);
-    }
-
-    for (auto& b : bullets) {
-        b->movement(deltaTime);
-    }
-
-    // kolizje
-    for (auto& b : bullets) {
         for (auto& o : opponents) {
-            if (!b->isDestroyed() && !o->isDestroyed()) {
-                if (b->getBounds().intersects(o->getBounds())) {
-                    b->destroy();
-                    o->destroy();
-                    if (o->isDestroyed()) {
-                        score += o->getPoints();
+            o->movement(deltaTime);
+        }
+
+        for (auto& b : bullets) {
+            b->movement(deltaTime);
+        }
+
+        // kolizje
+        for (auto& b : bullets) {
+            for (auto& o : opponents) {
+                if (!b->isDestroyed() && !o->isDestroyed()) {
+                    if (b->getBounds().intersects(o->getBounds())) {
+                        b->destroy();
+                        o->destroy();
+                        if (o->isDestroyed()) {
+                            score += o->getPoints();
+                        }
                     }
                 }
             }
         }
-    }
 
-    for (auto& o : opponents) {
-        if (!o->isDestroyed()) {
-            if (player.getBounds().intersects(o->getBounds())) {
-                player.destroy();
-                o->destroy();
+        for (auto& o : opponents) {
+            if (!o->isDestroyed()) {
+                if (player.getBounds().intersects(o->getBounds())) {
+                    player.destroy();
+                    o->destroy();
+                }
             }
         }
+
+        // usuwanie
+        bullets.erase(
+            std::remove_if(bullets.begin(), bullets.end(), [](const std::unique_ptr<Bullet>& b) {
+                return b->isOffScreen() || b->isDestroyed();
+            }),
+            bullets.end()
+            );
+
+        opponents.erase(
+            std::remove_if(opponents.begin(), opponents.end(), [this](const std::unique_ptr<Opponent>& o) {
+                bool isOffScreen = (o->getBounds().top + o->getBounds().height) > window.getSize().y - 110.0; // usuwa u spodu ekranu
+                return o->isDestroyed() || isOffScreen;
+            }),
+            opponents.end()
+            );
+
+        if (player.isDestroyed()) {
+            std::cout << "GAME OVER" << std::endl;
+            gameWon = false;
+            end(window);
+        }
+
+        // obsluga wyswietlacza wyniku
+        scoreText.setString(std::to_string(score));
+        sf::FloatRect textBounds = scoreText.getLocalBounds();
+        float xPos = 15.f;
+        float yPos = window.getView().getSize().y - textBounds.height - 15.f;
+        scoreText.setPosition(xPos, yPos);
+
+        // upgrade'y
+        if (score >= nextUpgrade) {
+            state = GameState::UPGRADE_MENU;
+            nextUpgrade += 20;\
+
+            // mozna zmienic zeby przy maksowaniu jakiejs wartosci juz jej nie wyswietlalo
+            upgradeMenuText.setString("WYBIERZ UPGRADE:\n {1} - zwiekszone obrazenia\n {2} - ulecz 1 zycie");
+            upgradeMenuText.setFont(font);
+        }
     }
-
-    // usuwanie
-    bullets.erase(
-        std::remove_if(bullets.begin(), bullets.end(), [](const std::unique_ptr<Bullet>& b) {
-            return b->isOffScreen() || b->isDestroyed();
-        }),
-        bullets.end()
-        );
-
-    opponents.erase(
-        std::remove_if(opponents.begin(), opponents.end(), [this](const std::unique_ptr<Opponent>& o) {
-            bool isOffScreen = (o->getBounds().top + o->getBounds().height) > window.getSize().y - 110.0; // usuwa u spodu ekranu
-            return o->isDestroyed() || isOffScreen;
-        }),
-        opponents.end()
-        );
-
-    if (player.isDestroyed()) {
-        std::cout << "GAME OVER" << std::endl;
-        gameWon = false;
-        end(window);
+    else if (state == GameState::UPGRADE_MENU) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+            player.increaseSpeed();
+            state = GameState::PLAYING;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
+            player.heal();
+            state = GameState::PLAYING;
+        }
     }
-
-    // obsluga wyswietlacza wyniku
-    scoreText.setString(std::to_string(score));
-    sf::FloatRect textBounds = scoreText.getLocalBounds();
-    float xPos = 15.f;
-    float yPos = window.getView().getSize().y - textBounds.height - 15.f;
-    scoreText.setPosition(xPos, yPos);
 }
 
 void Game::render() {
@@ -151,6 +179,10 @@ void Game::render() {
     player.draw(window);
 
     window.draw(scoreText);
+
+    if (state == GameState::UPGRADE_MENU) {
+        window.draw(upgradeMenuText);
+    }
 
     window.display();
 }

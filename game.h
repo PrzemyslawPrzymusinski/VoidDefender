@@ -7,11 +7,17 @@
 #include <opponent.h>
 #include <bullet.h>
 
+enum class GameState {
+    PLAYING,
+    UPGRADE_MENU,
+};
+
 class Game {
 private:
     sf::RenderWindow& window;
     sf::Event event;
     sf::Clock clock;
+    GameState state;
 
     Player player;
 
@@ -29,6 +35,8 @@ private:
     std::vector<std::unique_ptr<Bullet>> bullets;
 
     int score;
+    int nextUpgrade;
+    sf::Text upgradeMenuText;
 
     // spawn
     float spawnTimer;
