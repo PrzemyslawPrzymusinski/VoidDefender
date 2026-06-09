@@ -122,11 +122,21 @@ void Game::update() {
 
         opponents.erase(
             std::remove_if(opponents.begin(), opponents.end(), [this](const std::unique_ptr<Opponent>& o) {
-                bool isOffScreen = (o->getBounds().top + o->getBounds().height) > window.getSize().y - 110.0; // usuwa u spodu ekranu
-                return o->isDestroyed() || isOffScreen;
+                if (o->isDestroyed()) {
+                    return true;
+                }
+                bool isOffScreen = (o->getBounds().top + o->getBounds().height) > window.getSize().y - 110.0;
+
+                if (isOffScreen) {
+                    player.destroy();
+
+                    return true;
+                }
+
+                return false;
             }),
             opponents.end()
-            );
+        );
 
         if (player.isDestroyed()) {
             std::cout << "GAME OVER" << std::endl;
