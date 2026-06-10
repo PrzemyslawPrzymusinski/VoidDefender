@@ -163,17 +163,21 @@ void Game::update() {
             nextUpgrade += 20;
 
             // mozna zmienic zeby przy maksowaniu jakiejs wartosci juz jej nie wyswietlalo
-            upgradeMenuText.setString("WYBIERZ UPGRADE:\n {1} - zwiekszona predkosc\n {2} - ulecz 1 zycie\n");
+            upgradeMenuText.setString("WYBIERZ UPGRADE:\n {1} - ulecz 1 zycie\n {2} - zwieksz predkosc\n {3} - zwieksz szybkostrzelnosc");
             upgradeMenuText.setFont(font);
         }
     }
     else if (state == GameState::UPGRADE_MENU) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
-            player.increaseSpeed();
+            player.heal();
             state = GameState::PLAYING;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
-            player.heal();
+            player.increaseSpeed();
+            state = GameState::PLAYING;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) {
+            player.decreaseShootCooldown();
             state = GameState::PLAYING;
         }
     }

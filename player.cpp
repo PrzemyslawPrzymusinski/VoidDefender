@@ -76,6 +76,12 @@ void Player::increaseSpeed() {
     speed += 50;
 }
 
+void Player::decreaseShootCooldown() {
+    if (shootCooldown > 0.25f) {
+        shootCooldown -= 0.1f;
+    }
+}
+
 void Player::heal() {
     lifes +=1;
 }

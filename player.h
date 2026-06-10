@@ -26,6 +26,7 @@ public:
 
     // upgrade'y
     void increaseSpeed();
+    void decreaseShootCooldown();
     void heal();
 
     bool canShoot();
