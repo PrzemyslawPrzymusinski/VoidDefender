@@ -7,10 +7,11 @@
 #include <algorithm>
 #include <iostream>
 
-Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : window(windowRef){
+Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex, int _level) : window(windowRef){
     srand(time(0));
 
     state = GameState::PLAYING;
+    level = _level;
 
     backgroundSprite.setTexture(backgroundTex);
     backgroundSprite.setScale(0.5, 0.5);
@@ -39,18 +40,14 @@ Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : wind
         heartSprite.setScale(0.3f, 0.3f);
     }
 
-
-
     scoreText.setFont(font);
     scoreText.setCharacterSize(24);
     scoreText.setFillColor(sf::Color::White);
     scoreText.setString("0");
 
-    spawnBasicOpp(100.f);
-    spawnTankOpp();
-
     spawnTimer = 0.f;
-    spawnInterval = 1.5f;
+    if (level == 1 || level == 2) {spawnInterval = 1.5f;}
+    if (level == 3) {spawnInterval = 0.75f;}
 
     nextUpgrade = 10;
 }
@@ -166,7 +163,7 @@ void Game::update() {
             nextUpgrade += 20;
 
             // mozna zmienic zeby przy maksowaniu jakiejs wartosci juz jej nie wyswietlalo
-            upgradeMenuText.setString("WYBIERZ UPGRADE:\n {1} - zwiekszone obrazenia\n {2} - ulecz 1 zycie");
+            upgradeMenuText.setString("WYBIERZ UPGRADE:\n {1} - zwiekszona predkosc\n {2} - ulecz 1 zycie\n");
             upgradeMenuText.setFont(font);
         }
     }
@@ -212,6 +209,37 @@ void Game::render() {
     window.display();
 }
 
+void Game::spawnOpponent() {
+    float windowWidth = window.getView().getSize().x;
+    float randomX = std::rand() % (int)(windowWidth - 100);
+    std::unique_ptr<Opponent> newOpponent;
+
+    int spawnChance = std::rand() % 100;
+
+    if (level == 1) {
+        if (spawnChance < 40) {
+            newOpponent = std::make_unique<ZigZagOpp>(opponentTexture, randomX, windowWidth);
+        }
+        else if (spawnChance < 80) {
+            newOpponent = std::make_unique<BasicOpp>(opponentTexture, randomX);
+        } else {
+            newOpponent = std::make_unique<TankOpp>(tankTexture, randomX);
+        }
+    } else if (level == 2) {
+        if (spawnChance < 90) {
+            newOpponent = std::make_unique<ZigZagOpp>(opponentTexture, randomX, windowWidth);
+        } else {
+            newOpponent = std::make_unique<TankOpp>(tankTexture, randomX);
+        }
+    }
+    else if (level == 3) {
+        newOpponent = std::make_unique<ZigZagOpp>(opponentTexture, randomX, windowWidth);
+    }
+
+
+    opponents.push_back(std::move(newOpponent));
+}
+
 void Game::spawnBasicOpp() {
     float windowWidth = window.getSize().x;
     float randomX = std::rand() % (int)(windowWidth - 100);
@@ -224,25 +252,6 @@ void Game::spawnTankOpp() {
     float randomX = std::rand() % (int)(windowWidth - 100);
 
     opponents.push_back(std::make_unique<TankOpp>(tankTexture, randomX));
-}
-
-void Game::spawnOpponent() {
-    float windowWidth = window.getView().getSize().x;
-    float randomX = std::rand() % (int)(windowWidth - 100);
-    std::unique_ptr<Opponent> newOpponent;
-
-    int spawnChance = std::rand() % 100;
-
-    if (spawnChance < 40) {
-        newOpponent = std::make_unique<ZigZagOpp>(opponentTexture, randomX, windowWidth);
-    }
-    else if (spawnChance < 80) {
-        newOpponent = std::make_unique<BasicOpp>(opponentTexture, randomX);
-    } else {
-        newOpponent = std::make_unique<TankOpp>(tankTexture, randomX);
-    }
-
-    opponents.push_back(std::move(newOpponent));
 }
 
 void Game::spawnBasicOpp(float x) {

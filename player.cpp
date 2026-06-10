@@ -4,7 +4,7 @@
 
 Player::Player() {
     speed = 250;
-    shootCooldown = 0.5; // [s]
+    shootCooldown = 0.6; // [s]
     lifes = 3;
 
     if (!texture.loadFromFile("textures/statek.png")) {

@@ -123,7 +123,7 @@ void poziom1(sf::RenderWindow& window){
         std::cout << "Blad ladowania tla poziomu 1!" << std::endl;
     }
 
-    Game gra(window, poziomTexture);
+    Game gra(window, poziomTexture, 1);
     gra.run();
     end(window);
 }
@@ -135,7 +135,7 @@ void poziom2(sf::RenderWindow& window){
         std::cout << "Blad ladowania tla poziomu 2!" << std::endl;
     }
 
-    Game gra(window, poziomTexture);
+    Game gra(window, poziomTexture, 2);
     gra.run();
     end(window);
 
@@ -148,7 +148,7 @@ void poziom3(sf::RenderWindow& window){
         std::cout << "Blad ladowania tla poziomu 3!" << std::endl;
     }
 
-    Game gra(window, poziomTexture);
+    Game gra(window, poziomTexture, 3);
     gra.run();
     end(window);
 

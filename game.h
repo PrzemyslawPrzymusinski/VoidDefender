@@ -18,6 +18,7 @@ private:
     sf::Event event;
     sf::Clock clock;
     GameState state;
+    int level;
 
     Player player;
 
@@ -56,7 +57,7 @@ private:
 
     void spawnBullet();
 public:
-    Game(sf::RenderWindow& window, const sf::Texture& backgroundTex);
+    Game(sf::RenderWindow& window, const sf::Texture& backgroundTex, int _level);
     void run();
 };
 #endif // GAME_H
