@@ -25,8 +25,10 @@ private:
     sf::Texture opponentTexture;
     sf::Texture bulletTexture;
     sf::Texture tankTexture;
+    sf::Texture heartTexture;
 
     sf::Sprite backgroundSprite;
+    sf::Sprite heartSprite;
 
     sf::Font font;
     sf::Text scoreText;

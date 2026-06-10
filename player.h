@@ -33,6 +33,7 @@ public:
     bool isDestroyed() const;
     sf::Vector2f getPosition() const;
     sf::FloatRect getBounds() const;
+    int getLifes() const;
     void updateInvincibility();
 };
 

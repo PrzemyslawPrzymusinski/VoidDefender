@@ -32,6 +32,15 @@ Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex) : wind
         cout << "Blad czcionki" << endl;
     }
 
+    if (!heartTexture.loadFromFile("textures/zycie.png")) {
+       cout << "Blad zycie.png" << endl;
+    } else {
+        heartSprite.setTexture(heartTexture);
+        heartSprite.setScale(0.3f, 0.3f);
+    }
+
+
+
     scoreText.setFont(font);
     scoreText.setCharacterSize(24);
     scoreText.setFillColor(sf::Color::White);
@@ -154,7 +163,7 @@ void Game::update() {
         // upgrade'y
         if (score >= nextUpgrade) {
             state = GameState::UPGRADE_MENU;
-            nextUpgrade += 20;\
+            nextUpgrade += 20;
 
             // mozna zmienic zeby przy maksowaniu jakiejs wartosci juz jej nie wyswietlalo
             upgradeMenuText.setString("WYBIERZ UPGRADE:\n {1} - zwiekszone obrazenia\n {2} - ulecz 1 zycie");
@@ -187,6 +196,12 @@ void Game::render() {
     }
 
     player.draw(window);
+
+    for (int i=0; i<player.getLifes(); i++) {
+        window.draw(heartSprite);
+        heartSprite.move(heartSprite.getGlobalBounds().width - 17.f, 0);
+    }
+    heartSprite.setPosition(0,0);
 
     window.draw(scoreText);
 
@@ -229,7 +244,6 @@ void Game::spawnOpponent() {
 
     opponents.push_back(std::move(newOpponent));
 }
-
 
 void Game::spawnBasicOpp(float x) {
     opponents.push_back(std::make_unique<BasicOpp>(opponentTexture, x));

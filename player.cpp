@@ -121,6 +121,10 @@ sf::FloatRect Player::getBounds() const {
     return sprite.getGlobalBounds();
 }
 
+int Player::getLifes() const {
+    return lifes;
+}
+
 void Player::updateInvincibility() {
     if (isInvincible) {
         if (damageTimer.getElapsedTime().asSeconds() >= invincibilityDuration) {

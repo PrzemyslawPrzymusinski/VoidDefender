@@ -1,7 +1,7 @@
 #include "bullet.h"
 
 Bullet::Bullet(const sf::Texture& texture, sf::Vector2f pos) {
-    speed = 200.0; // zrobic zeby  bylo zmienne
+    speed = 400.0; // zrobic zeby  bylo zmienne
 
     sf::FloatRect bounds = sprite.getLocalBounds();
     sprite.setOrigin(bounds.width / 2.0, bounds.height / 2.0);
