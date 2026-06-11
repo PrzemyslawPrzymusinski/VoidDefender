@@ -16,7 +16,15 @@ bool wPoziomie = true;
 bool gameWon = false;
 bool wEndu = true;
 
-void wyniki(vector<int>& tabela){
+void wyniki(vector<int>& tabela, int score){
+    //zapis wyniku
+    ofstream plikZ("wyniki.txt", ios::app);
+    if(plikZ.is_open()){
+        plikZ<<score<<'\n';
+        plikZ.close();
+    }
+
+    //odczyt poprzednich wyników i sortowanie
     ifstream plikO("wyniki.txt");
     if(plikO.is_open()){
         int linia;
@@ -39,7 +47,7 @@ void wyniki(vector<int>& tabela){
 
 }
 
-void end(sf::RenderWindow& window){
+void end(sf::RenderWindow& window, int score){
     wEndu = true;
     sf::Texture backgroundTexture;
     backgroundTexture.loadFromFile("backgrounds/wygrana.png");
@@ -53,7 +61,7 @@ void end(sf::RenderWindow& window){
 
     vector<int> tab_wyniki;
 
-    wyniki(tab_wyniki);
+    wyniki(tab_wyniki, score);
 
     vector<sf::Text> tekstyLiczb;
     float pozycjaY = 570;
@@ -72,6 +80,14 @@ void end(sf::RenderWindow& window){
         tekstyLiczb.push_back(text);
         pozycjaY += 30;
     }
+
+    sf::Text Score;
+    Score.setFont(czcionka);
+    Score.setString(std::to_string(score));
+    Score.setFillColor(sf::Color::White);
+    Score.setCharacterSize(40);
+    Score.setPosition(310, 410);
+    
     przyciski* Przyciski[2];
     sf::Texture tekstury[2];
     tekstury[0].loadFromFile("buttons/przycisk4.png");
@@ -108,6 +124,8 @@ void end(sf::RenderWindow& window){
             window.draw(*p);
         }
 
+        window.draw(Score);
+
         window.display();
     }
 
@@ -125,7 +143,7 @@ void poziom1(sf::RenderWindow& window){
 
     Game gra(window, poziomTexture, 1);
     gra.run();
-    end(window);
+    end(window, gra.getScore());
 }
 
 void poziom2(sf::RenderWindow& window){
@@ -137,7 +155,7 @@ void poziom2(sf::RenderWindow& window){
 
     Game gra(window, poziomTexture, 2);
     gra.run();
-    end(window);
+    end(window, gra.getScore());
 
 }
 
@@ -150,6 +168,6 @@ void poziom3(sf::RenderWindow& window){
 
     Game gra(window, poziomTexture, 3);
     gra.run();
-    end(window);
+    end(window, gra.getScore());
 
 }
