@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "animation.h"
 
-class Opponent {
+class Opponent :public animation{
 protected:
     float speed;
     int lifes;
