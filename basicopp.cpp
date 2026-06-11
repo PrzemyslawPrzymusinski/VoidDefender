@@ -5,16 +5,18 @@ BasicOpp::BasicOpp(const sf::Texture& texture) : Opponent(texture) {
     //lifes = 1;
     points = 1;
 
-    sprite.setScale(0.075f, 0.075f);
+    setAnimation();
+
+    setScale(0.3, 0.3);
 }
 
 BasicOpp::BasicOpp(const sf::Texture& texture, float _x) : Opponent(texture, _x) {
     speed = rand() % 150 + 100;
     points = 1;
 
-    sprite.setScale(0.075f, 0.075f);
+    setScale(0.3, 0.3);
 }
 
 void BasicOpp::movement(float deltaTime) {
-    sprite.move(0.f, speed * deltaTime);
+    move(0.f, speed * deltaTime);
 }
