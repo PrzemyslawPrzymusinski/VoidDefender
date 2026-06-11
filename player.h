@@ -9,8 +9,7 @@ enum class PlayerState {
     RIGHT       // Skręt w prawo
 };
 
-class Player
-{
+class Player:public animation{
 private:
     sf::Texture texture;
     float speed;
