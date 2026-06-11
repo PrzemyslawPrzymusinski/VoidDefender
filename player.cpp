@@ -12,12 +12,18 @@ Player::Player() {
     }
     sprite.setTexture(texture);
 
+    setAnimation();
+
+    if (!idleFrames.empty()) {
+        setTextureRect(idleFrames[0]);
+    }
+
     // ustawianie kotwicy na srodek
     sf::FloatRect bounds = sprite.getLocalBounds();
     sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 
     // temp
-    sprite.setScale(0.07, 0.07);
+    sprite.setScale(0.3, 0.3);
 
     sprite.setPosition(300.0, 700.0);
 }
@@ -27,9 +33,11 @@ void Player::handleInput(float deltaTime, sf::Vector2f windowSize) {
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         movement.x -= speed * deltaTime;
+        newState = PlayerState::LEFT;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         movement.x += speed * deltaTime;
+        newState = PlayerState::RIGHT;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         movement.y -= speed * deltaTime;
@@ -44,7 +52,11 @@ void Player::handleInput(float deltaTime, sf::Vector2f windowSize) {
         movement /= length;
     }
 
-    sprite.move(movement * speed * deltaTime);
+    if (newState != currentState){
+        currentState = newState;
+    }
+
+    move(movement * speed * deltaTime);
 
     //blokowanie na krawedziach
     sf::Vector2f position = sprite.getPosition();
@@ -113,7 +125,7 @@ bool Player::isDestroyed() const {
 }
 
 sf::Vector2f Player::getPosition() const {
-    sf::FloatRect bounds = sprite.getGlobalBounds();
+    sf::FloatRect bounds = getGlobalBounds();
 
     // zwracanie srodka gracza pod Bullet
     float centerX = bounds.left + (bounds.width / 2.f);
@@ -137,4 +149,25 @@ void Player::updateInvincibility() {
             isInvincible = false;
         }
     }
+}
+
+void Player:: updateAnimation(const sf::Time& elapsed){
+    if (currentState == PlayerState::IDLE) {
+        animate(elapsed, idleFrames);
+    }
+    else if (currentState == PlayerState::LEFT) {
+        animate(elapsed, leftFrames);
+    }
+    else if (currentState == PlayerState::RIGHT) {
+        animate(elapsed, rightFrames);
+    }
+}
+
+void Player:: setAnimation(){
+    add_animation_frame(sf::IntRect(0,0,315, 406), idleFrames);
+    add_animation_frame(sf::IntRect(376,0,315, 406), idleFrames);
+    add_animation_frame(sf::IntRect(757,0,315, 406), leftFrames);
+    add_animation_frame(sf::IntRect(1136,0,315, 406), leftFrames);
+    add_animation_frame(sf::IntRect(0,414,315, 406), rightFrames);
+    add_animation_frame(sf::IntRect(376,414,315, 406), rightFrames);
 }
