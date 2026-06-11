@@ -1,14 +1,15 @@
 #ifndef OPPONENT_H
 #define OPPONENT_H
 #include <SFML/Graphics.hpp>
+#include "animation.h"
 
 class Opponent {
 protected:
-    sf::Sprite sprite;
     float speed;
     int lifes;
     bool destroyed = false;
     int points;
+    std::vector<sf::IntRect> rectangles;
 
 public:
     Opponent(const sf::Texture& texture);
@@ -17,7 +18,8 @@ public:
     virtual ~Opponent() = default;
 
     virtual void movement(float deltaTime) = 0;
-    void draw(sf::RenderWindow& window) const;
+    void setAnimation();
+    std::vector<sf::IntRect>& getRecte();
 
     sf::FloatRect getBounds() const;
     int getPoints() const;
