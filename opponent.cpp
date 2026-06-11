@@ -3,23 +3,23 @@
 #include <cstdlib>
 
 Opponent::Opponent(const sf::Texture& texture) {
-    sprite.setTexture(texture);
+    setTexture(texture);
 
-    sprite.setScale(0.5, 0.5);
+    setScale(0.5, 0.5);
 
-    sprite.setPosition(300.0, -50.f);
+    setPosition(300.0, -50.f);
 }
 
 Opponent::Opponent(const sf::Texture& texture, float _x) {
-    sprite.setTexture(texture);
+    setTexture(texture);
 
-    sprite.setScale(0.5, 0.5);
+    setScale(0.5, 0.5);
 
-    sprite.setPosition(_x, -50.0);
+    setPosition(_x, -50.0);
 }
 
 sf::FloatRect Opponent::getBounds() const {
-    return sprite.getGlobalBounds();
+    return getGlobalBounds();
 }
 
 int Opponent::getPoints() const {
