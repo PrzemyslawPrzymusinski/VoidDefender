@@ -70,10 +70,14 @@ void Game::processEvents() {
 
 void Game::update() {
     float deltaTime = clock.restart().asSeconds();
+    sf::Time elapsed = sf::seconds(deltaTime);
 
     if (state == GameState::PLAYING) {
         player.updateInvincibility();
         player.handleInput(deltaTime, window.getView().getSize());
+
+        player.updateAnimation(elapsed);
+        
         if (player.canShoot()) {
             spawnBullet();
         }
@@ -88,6 +92,7 @@ void Game::update() {
 
         for (auto& o : opponents) {
             o->movement(deltaTime);
+            o->animate(elapsed, o->getRecte());
         }
 
         for (auto& b : bullets) {
@@ -147,7 +152,7 @@ void Game::update() {
         if (player.isDestroyed()) {
             std::cout << "GAME OVER" << std::endl;
             gameWon = false;
-            end(window);
+            end(window, score);
         }
 
         // obsluga wyswietlacza wyniku
@@ -189,14 +194,14 @@ void Game::render() {
     window.draw(backgroundSprite);
 
     for (auto& o : opponents) {
-        o->draw(window);
+        window.draw(*o);
     }
 
     for (auto& b : bullets) {
         b->draw(window);
     }
 
-    player.draw(window);
+    window.draw(player);
 
     for (int i=0; i<player.getLifes(); i++) {
         window.draw(heartSprite);
@@ -264,4 +269,8 @@ void Game::spawnBasicOpp(float x) {
 
 void Game::spawnBullet() {
     bullets.push_back(std::make_unique<Bullet>(bulletTexture, player.getPosition()));
+}
+
+int Game:: getScore(){
+    return score;
 }
