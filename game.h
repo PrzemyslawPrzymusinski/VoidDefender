@@ -3,9 +3,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
-#include <player.h>
-#include <opponent.h>
-#include <bullet.h>
+#include "player.h"
+#include "opponent.h"
+#include "bullet.h"
 
 enum class GameState {
     PLAYING,
@@ -59,5 +59,6 @@ private:
 public:
     Game(sf::RenderWindow& window, const sf::Texture& backgroundTex, int _level);
     void run();
+    int getScore();
 };
 #endif // GAME_H
