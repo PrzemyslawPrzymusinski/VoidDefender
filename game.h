@@ -33,6 +33,7 @@ private:
 
     sf::Font font;
     sf::Text scoreText;
+    sf::Text nextUpgradeText;
 
     std::vector<std::unique_ptr<Opponent>> opponents;
     std::vector<std::unique_ptr<Bullet>> bullets;
