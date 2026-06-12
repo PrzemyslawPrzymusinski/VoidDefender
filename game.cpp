@@ -50,6 +50,10 @@ Game::Game(sf::RenderWindow& windowRef, const sf::Texture& backgroundTex, int _l
     if (level == 3) {spawnInterval = 0.75f;}
 
     nextUpgrade = 10;
+    nextUpgradeText.setFont(font);
+    nextUpgradeText.setCharacterSize(24);
+    nextUpgradeText.setFillColor(sf::Color::White);
+    nextUpgradeText.setString(std::to_string(nextUpgrade));
 }
 
 void Game::run() {
@@ -57,6 +61,10 @@ void Game::run() {
         processEvents();
         update();
         render();
+
+        if (player.isDestroyed()) {
+            return;
+        }
     }
 }
 
@@ -157,10 +165,14 @@ void Game::update() {
 
         // obsluga wyswietlacza wyniku
         scoreText.setString(std::to_string(score));
-        sf::FloatRect textBounds = scoreText.getLocalBounds();
-        float xPos = 15.f;
-        float yPos = window.getView().getSize().y - textBounds.height - 15.f;
+        float xPos = 70;
+        float yPos = 970;
         scoreText.setPosition(xPos, yPos);
+
+        nextUpgradeText.setString(std::to_string(nextUpgrade));
+        float xPos2 = 540;
+        float yPos2 = 990;
+        nextUpgradeText.setPosition(xPos2, yPos2);
 
         // upgrade'y
         if (score >= nextUpgrade) {
@@ -210,6 +222,7 @@ void Game::render() {
     heartSprite.setPosition(0,0);
 
     window.draw(scoreText);
+    window.draw(nextUpgradeText);
 
     if (state == GameState::UPGRADE_MENU) {
         window.draw(upgradeMenuText);
