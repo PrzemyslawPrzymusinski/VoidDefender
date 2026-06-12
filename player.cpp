@@ -10,7 +10,7 @@ Player::Player() {
     if (!texture.loadFromFile("textures/statek.png")) {
         std::cout << "Blad ladowania tesktury statku" << std::endl;
     }
-    sprite.setTexture(texture);
+    setTexture(texture);
 
     setAnimation();
 
@@ -19,17 +19,18 @@ Player::Player() {
     }
 
     // ustawianie kotwicy na srodek
-    sf::FloatRect bounds = sprite.getLocalBounds();
-    sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+    sf::FloatRect bounds = getLocalBounds();
+    setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 
     // temp
-    sprite.setScale(0.3, 0.3);
+    setScale(0.3, 0.3);
 
-    sprite.setPosition(300.0, 700.0);
+    setPosition(300.0, 700.0);
 }
 
 void Player::handleInput(float deltaTime, sf::Vector2f windowSize) {
     sf::Vector2f movement(0.0, 0.0);
+    PlayerState newState = PlayerState::IDLE;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         movement.x -= speed * deltaTime;
@@ -59,8 +60,8 @@ void Player::handleInput(float deltaTime, sf::Vector2f windowSize) {
     move(movement * speed * deltaTime);
 
     //blokowanie na krawedziach
-    sf::Vector2f position = sprite.getPosition();
-    sf::FloatRect bounds = sprite.getGlobalBounds();
+    sf::Vector2f position = getPosition();
+    sf::FloatRect bounds = getGlobalBounds();
     float y_offset = 110.0; // offset do blokowania przed ramka (110.0 jest +- ok)
 
     float halfWidth = bounds.width / 2.f;
@@ -68,11 +69,11 @@ void Player::handleInput(float deltaTime, sf::Vector2f windowSize) {
     position.x = std::clamp(position.x, halfWidth, windowSize.x - halfWidth);
     position.y = std::clamp(position.y, halfHeight, windowSize.y - halfHeight - y_offset);
 
-    sprite.setPosition(position);
+    setPosition(position);
 }
 
 void Player::draw(sf::RenderWindow& window) {
-    window.draw(sprite);
+    window.draw(*this);
 
     // ramka do testowania
     /*sf::FloatRect bounds = sprite.getGlobalBounds();
@@ -136,7 +137,7 @@ sf::Vector2f Player::getPosition() const {
 
 
 sf::FloatRect Player::getBounds() const {
-    return sprite.getGlobalBounds();
+    return getGlobalBounds();
 }
 
 int Player::getLifes() const {

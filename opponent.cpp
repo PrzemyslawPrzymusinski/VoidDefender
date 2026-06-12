@@ -8,6 +8,11 @@ Opponent::Opponent(const sf::Texture& texture) {
     setScale(0.5, 0.5);
 
     setPosition(300.0, -50.f);
+
+    setAnimation();
+    if (!rectangles.empty()) {
+        setTextureRect(rectangles[0]);
+    }
 }
 
 Opponent::Opponent(const sf::Texture& texture, float _x) {
@@ -16,6 +21,11 @@ Opponent::Opponent(const sf::Texture& texture, float _x) {
     setScale(0.5, 0.5);
 
     setPosition(_x, -50.0);
+
+    setAnimation();
+    if (!rectangles.empty()) {
+        setTextureRect(rectangles[0]);
+    }
 }
 
 sf::FloatRect Opponent::getBounds() const {
