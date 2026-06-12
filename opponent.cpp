@@ -5,7 +5,7 @@
 Opponent::Opponent(const sf::Texture& texture) {
     setTexture(texture);
 
-    setScale(0.5, 0.5);
+    setScale(0.3, 0.3);
 
     setPosition(300.0, -50.f);
 
@@ -18,7 +18,7 @@ Opponent::Opponent(const sf::Texture& texture) {
 Opponent::Opponent(const sf::Texture& texture, float _x) {
     setTexture(texture);
 
-    setScale(0.5, 0.5);
+    setScale(0.3, 0.3);
 
     setPosition(_x, -50.0);
 
