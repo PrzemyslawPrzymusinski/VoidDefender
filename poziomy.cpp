@@ -17,13 +17,6 @@ bool gameWon = false;
 bool wEndu = true;
 
 void wyniki(vector<int>& tabela, int score){
-    //zapis wyniku
-    ofstream plikZ("wyniki.txt", ios::app);
-    if(plikZ.is_open()){
-        plikZ<<score<<'\n';
-        plikZ.close();
-    }
-
     //odczyt poprzednich wyników i sortowanie
     ifstream plikO("wyniki.txt");
     if(plikO.is_open()){
@@ -44,7 +37,12 @@ void wyniki(vector<int>& tabela, int score){
         }
     }
 
-
+    //zapis wyniku
+    ofstream plikZ("wyniki.txt", ios::app);
+    if(plikZ.is_open()){
+        plikZ<<score<<'\n';
+        plikZ.close();
+    }
 }
 
 void end(sf::RenderWindow& window, int score){
