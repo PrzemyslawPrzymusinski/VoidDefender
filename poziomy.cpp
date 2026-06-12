@@ -105,6 +105,13 @@ void end(sf::RenderWindow& window, int score){
                 }
             }
 
+            if(!wEndu){
+                break;
+            }
+        }
+
+        if(!wEndu){
+            break;
         }
 
         window.clear();
@@ -130,6 +137,9 @@ void end(sf::RenderWindow& window, int score){
     for(int i = 0; i < 2; ++i) {
         delete Przyciski[i];
     }
+    if (window.isOpen()) {
+        wPoziomie = false;
+    }
 }
 
 void poziom1(sf::RenderWindow& window){
@@ -140,8 +150,10 @@ void poziom1(sf::RenderWindow& window){
     }
 
     Game gra(window, poziomTexture, 1);
-    gra.run();
-    end(window, gra.getScore());
+    while(window.isOpen() && wPoziomie){
+        gra.run();
+        end(window, gra.getScore());
+    }
 }
 
 void poziom2(sf::RenderWindow& window){
@@ -152,8 +164,10 @@ void poziom2(sf::RenderWindow& window){
     }
 
     Game gra(window, poziomTexture, 2);
-    gra.run();
-    end(window, gra.getScore());
+    while(window.isOpen() && wPoziomie){
+        gra.run();
+        end(window, gra.getScore());
+    }
 
 }
 
@@ -165,7 +179,8 @@ void poziom3(sf::RenderWindow& window){
     }
 
     Game gra(window, poziomTexture, 3);
-    gra.run();
-    end(window, gra.getScore());
-
+    while(window.isOpen() && wPoziomie){
+        gra.run();
+        end(window, gra.getScore());
+    }
 }
