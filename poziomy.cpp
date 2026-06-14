@@ -16,9 +16,22 @@ bool wPoziomie = true;
 bool gameWon = false;
 bool wEndu = true;
 
-void wyniki(vector<int>& tabela, int score){
+void wyniki(vector<int>& tabela, int& score, int nr_poziomu, bool& best_new){
     //odczyt poprzednich wyników i sortowanie
-    ifstream plikO("wyniki.txt");
+    ifstream plikO;
+    switch (nr_poziomu) {
+    case 1:
+        plikO.open("wyniki1.txt");
+        break;
+    case 2:
+        plikO.open("wyniki2.txt");
+        break;
+    case 3:
+        plikO.open("wyniki3.txt");
+        break;
+    default:
+        break;
+    }
     if(plikO.is_open()){
         int linia;
         while(plikO >> linia){
@@ -38,10 +51,27 @@ void wyniki(vector<int>& tabela, int score){
     }
 
     //zapis wyniku
-    ofstream plikZ("wyniki.txt", ios::app);
+    ofstream plikZ;
+    switch (nr_poziomu) {
+    case 1:
+        plikZ.open("wyniki1.txt", ios::app);
+        break;
+    case 2:
+        plikZ.open("wyniki2.txt", ios::app);
+        break;
+    case 3:
+        plikZ.open("wyniki3.txt", ios::app);
+        break;
+    default:
+        break;
+    }
     if(plikZ.is_open()){
         plikZ<<score<<'\n';
         plikZ.close();
+    }
+
+    if(score>tabela[0]){
+        best_new = true;
     }
 }
 
@@ -58,14 +88,23 @@ void end(sf::RenderWindow& window, int score){
     backgroundSprite2.setScale(0.5,0.5);
 
     vector<int> tab_wyniki;
+    bool best_new = false;
 
-    wyniki(tab_wyniki, score);
+    wyniki(tab_wyniki, score, nr_poziomu, best_new);
+
+    sf::Text new_best;
+    sf::Font czcionka;
+    czcionka.loadFromFile("stan0753.ttf");
+
+    new_best.setFont(czcionka);
+    new_best.setString("Nowy najlepszy wynik");
+    new_best.setFillColor(sf::Color::White);
+    new_best.setCharacterSize(15);
+    new_best.setPosition(240, 365);
 
     vector<sf::Text> tekstyLiczb;
     float pozycjaY = 570;
 
-    sf::Font czcionka;
-    czcionka.loadFromFile("stan0753.ttf");
     int ileWyników = min(5, (int)tab_wyniki.size());
     for(int k =0; k<ileWyników; k++){
         sf::Text text;
@@ -131,6 +170,10 @@ void end(sf::RenderWindow& window, int score){
 
         window.draw(Score);
 
+        if(best_new){
+            window.draw(new_best);
+        }
+
         window.display();
     }
 
@@ -152,7 +195,7 @@ void poziom1(sf::RenderWindow& window){
     Game gra(window, poziomTexture, 1);
     while(window.isOpen() && wPoziomie){
         gra.run();
-        end(window, gra.getScore());
+        end(window, gra.getScore(), 1);
     }
 }
 
@@ -166,7 +209,7 @@ void poziom2(sf::RenderWindow& window){
     Game gra(window, poziomTexture, 2);
     while(window.isOpen() && wPoziomie){
         gra.run();
-        end(window, gra.getScore());
+        end(window, gra.getScore(), 2);
     }
 
 }
@@ -181,6 +224,6 @@ void poziom3(sf::RenderWindow& window){
     Game gra(window, poziomTexture, 3);
     while(window.isOpen() && wPoziomie){
         gra.run();
-        end(window, gra.getScore());
+        end(window, gra.getScore(), 3);
     }
 }
