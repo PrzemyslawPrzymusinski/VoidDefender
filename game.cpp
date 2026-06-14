@@ -176,7 +176,7 @@ void Game::update() {
         // upgrade'y
         if (score >= nextUpgrade) {
             state = GameState::UPGRADE_MENU;
-            nextUpgrade += 20;
+            nextUpgrade += 50;
 
             // mozna zmienic zeby przy maksowaniu jakiejs wartosci juz jej nie wyswietlalo
             upgradeMenuText.setString("WYBIERZ UPGRADE:\n {1} - ulecz 1 zycie\n {2} - zwieksz predkosc\n {3} - zwieksz szybkostrzelnosc");
