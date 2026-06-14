@@ -75,7 +75,7 @@ void wyniki(vector<int>& tabela, int& score, int nr_poziomu, bool& best_new){
     }
 }
 
-void end(sf::RenderWindow& window, int score){
+void end(sf::RenderWindow& window, int score, int nr_poziomu){
     wEndu = true;
     sf::Texture backgroundTexture;
     backgroundTexture.loadFromFile("backgrounds/wygrana.png");
