@@ -160,7 +160,6 @@ void Game::update() {
         if (player.isDestroyed()) {
             std::cout << "GAME OVER" << std::endl;
             gameWon = false;
-            end(window, score);
         }
 
         // obsluga wyswietlacza wyniku
