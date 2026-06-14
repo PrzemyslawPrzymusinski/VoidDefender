@@ -170,7 +170,7 @@ void Game::update() {
 
         nextUpgradeText.setString(std::to_string(nextUpgrade));
         float xPos2 = 540;
-        float yPos2 = 990;
+        float yPos2 = 970;
         nextUpgradeText.setPosition(xPos2, yPos2);
 
         // upgrade'y
