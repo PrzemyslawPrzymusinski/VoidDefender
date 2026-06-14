@@ -10,9 +10,9 @@ extern bool wPoziomie;
 extern bool gameWon;
 extern bool wEndu;
 
-void wyniki(vector<int>& tabela, int score);
+void wyniki(vector<int>& tabela, int& score, int nr_poziomu, bool& best_new);
 
-void end(sf::RenderWindow& window, int score);
+void end(sf::RenderWindow& window, int score, int nr_poziomu);
 
 void poziom1(sf::RenderWindow& window);
 
