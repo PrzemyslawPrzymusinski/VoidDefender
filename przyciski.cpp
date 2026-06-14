@@ -86,9 +86,6 @@ void create_bottoms (przyciski* Przyciski[],const sf::Texture tekstury[], int n)
     default:
         break;
     }
-
-
-
 }
 
 

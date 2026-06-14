@@ -112,7 +112,7 @@ bool Player::canShoot() {
 void Player::destroy() {
     if (!isInvincible) {
         lifes -= 1;
-        std::cout << "Przyjeto obrazenia" << std::endl;
+        //std::cout << "Przyjeto obrazenia" << std::endl;
         if (lifes <= 0) {
             destroyed = true;
         }
