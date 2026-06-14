@@ -96,6 +96,18 @@ void Game::update() {
         if (spawnTimer >= spawnInterval) {
             spawnOpponent();
             spawnTimer = 0.f;
+
+            // zwiekszanie poziomu trudnosci nieznaczenie z biegiem czasu
+            if (level == 1 || level == 2) {
+                if (spawnInterval > 0.5f) {
+                    spawnInterval -= 0.005f;
+                }
+            }
+            else if (level == 3) {
+                if (spawnInterval > 0.3f) {
+                    spawnInterval -= 0.005f;
+                }
+            }
         }
 
         for (auto& o : opponents) {
